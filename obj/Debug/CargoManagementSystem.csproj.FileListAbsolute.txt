@@ -1,0 +1,15 @@
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\bin\Debug\CargoManagementSystem.exe.config
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\bin\Debug\CargoManagementSystem.exe
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\bin\Debug\CargoManagementSystem.pdb
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\CargoManagementSystem.csprojAssemblyReference.cache
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\View\MainWindow.g.cs
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\App.g.cs
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\CargoManagementSystem_MarkupCompile.cache
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\CargoManagementSystem_MarkupCompile.lref
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\View\MainWindow.baml
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\CargoManagementSystem.g.resources
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\CargoManagementSystem.Properties.Resources.resources
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\CargoManagementSystem.csproj.GenerateResource.cache
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\CargoManagementSystem.csproj.CoreCompileInputs.cache
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\CargoManagementSystem.exe
+D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\CargoManagementSystem.pdb
