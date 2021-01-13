@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\my_projects\CargoManagementSystem\CargoManagementSystem\obj\Debug\
+D:\GitRepository\CargoManagementSystem\obj\Debug\
 CargoManagementSystem
 none
 false
 DEBUG;TRACE
-D:\my_projects\CargoManagementSystem\CargoManagementSystem\App.xaml
-1-1711142684
+D:\GitRepository\CargoManagementSystem\App.xaml
+2231559658
 
-62081399185
-13-1505183044
-View\MainWindow.xaml;
+791928400409
+201229043773
+View\AddBlockWindow.xaml;View\AddCargoWindow.xaml;View\AddPlaneWindow.xaml;View\AddPurchaseOrderCollectionWindow.xaml;View\AddPurchaseOrderWindow.xaml;View\AddSellOrderCollectionWindow.xaml;View\AddSellOrderWindow.xaml;View\AddWarehouseWindow.xaml;View\CargoCollectionDetailWindow.xaml;View\CargoDetailWindow.xaml;View\CategoryManagementUserControl.xaml;View\LogPurchaseOrderUserControl.xaml;View\LogSellOrderUserControl.xaml;View\MainWindow.xaml;View\PromptWindow.xaml;View\PurchaseCargoUserControl.xaml;View\PurchaseOrderCollectionDetailWindow.xaml;View\SearchUserControl.xaml;View\SellCargoUserControl.xaml;View\SellOrderCollectionDetailWindow.xaml;View\WarehouseManagementUserControl.xaml;View\WarningWindow.xaml;
 
-False
+True
 

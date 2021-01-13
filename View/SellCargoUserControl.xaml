@@ -1,0 +1,647 @@
+﻿<UserControl x:Class="CargoManagementSystem.View.SellCargoUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Converter="clr-namespace:CargoManagementSystem.Converter"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CargoManagementSystem.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="750" d:DesignWidth="800" x:Name="Window">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <Storyboard x:Key="OutOrderStoryBoard">
+                        <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetName="tt" Storyboard.TargetProperty="Y"/>
+                    </Storyboard>
+                    <Storyboard x:Key="InOrderStoryBoard">
+                        <DoubleAnimation Duration="0:0:0.2" To="600" Storyboard.TargetName="tt" Storyboard.TargetProperty="Y"/>
+                    </Storyboard>
+                    <Converter:DoubleToStringConverter x:Key="DoubleToStringConverter"/>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Button.Click" SourceName="OutOrderButton">
+            <BeginStoryboard Storyboard="{StaticResource OutOrderStoryBoard}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Button.Click" SourceName="InOrderButton">
+            <BeginStoryboard Storyboard="{StaticResource InOrderStoryBoard}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Button.Click" SourceName="DeleteOrderCollectionButton">
+            <BeginStoryboard Storyboard="{StaticResource InOrderStoryBoard}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Button.Click" SourceName="ConfirmOrderCollectionButton">
+            <BeginStoryboard Storyboard="{StaticResource InOrderStoryBoard}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Border Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox  VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20,12,20,12" Height="50" 
+                          AcceptsReturn="False" TextWrapping="Wrap" VerticalScrollBarVisibility="Hidden" 
+                          materialDesign:HintAssist.Hint="输入产品名称"  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}" 
+                          Grid.Column="0" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}"
+                          FontSize="20"/>
+                <Button Grid.Column="1" Margin="20,0,20,0" HorizontalAlignment="Stretch" Height="50" VerticalAlignment="Center" Style="{StaticResource MaterialDesignRaisedLightButton}" ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+                        Content="查询" FontSize="20"/>
+            </Grid>
+
+            <DataGrid x:Name="DataGrid" Margin="20,0,20,0" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" 
+                      ItemsSource="{Binding CargoCollectionViewModels}" CanUserAddRows="False" GridLinesVisibility="All"  SelectionUnit="Cell" 
+                      SelectionMode="Extended" Grid.Row="1" VerticalAlignment="Stretch" AutoGenerateColumns="False" 
+                      HorizontalContentAlignment="Center">
+                <DataGrid.Columns>
+                    <materialDesign:DataGridTextColumn x:Name="CargoName" Binding="{Binding CargoCollection.Cargo.CargoName}" Header="商品名" Width="Auto" IsReadOnly="True" FontSize="20">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn x:Name="Category" Binding="{Binding CargoCollection.Cargo.Category}" Header="类别" Width="Auto" IsReadOnly="True" FontSize="20">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn x:Name="Material" Binding="{Binding CargoCollection.Cargo.Material}" Header="材料" Width="Auto" IsReadOnly="True" FontSize="20">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn x:Name="Size" Binding="{Binding CargoCollection.Cargo.Size}" Header="尺寸" Width="Auto" IsReadOnly="True" FontSize="20">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn x:Name="WarehouseName" Binding="{Binding CargoCollection.WarehouseName}" Header="仓库" Width="Auto" IsReadOnly="True" FontSize="20">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn x:Name="PlaneName" Binding="{Binding CargoCollection.PlaneName}" Header="楼层" Width="Auto" IsReadOnly="True" FontSize="20">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn x:Name="BlockName" Binding="{Binding CargoCollection.BlockName}" Header="区域" Width="Auto" IsReadOnly="True" FontSize="20">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </materialDesign:DataGridTextColumn>
+
+
+                    <materialDesign:DataGridComboBoxColumn x:Name="UnitPurchasePrize" Header="进价" Width="Auto"
+                                                           SelectedItemBinding="{Binding SelectedPurchasePrizeDic, UpdateSourceTrigger=PropertyChanged}"
+                                                           DisplayMemberPath="UnitPurchasePrize" IsEditable="False">
+
+                        <DataGridColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridColumn.HeaderStyle>
+                        <materialDesign:DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="ComboBox" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type ComboBox}, ResourceId=MaterialDataGridComboBoxColumnEditingStyle}}" >
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="20"/>
+                                <Setter Property="ItemsSource" Value="{Binding CargoCollection.PurchasePrizeDics}" />
+
+                                <Setter Property="ItemTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding UnitPurchasePrize, Converter={StaticResource DoubleToStringConverter}}"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </materialDesign:DataGridComboBoxColumn.EditingElementStyle>
+                        <materialDesign:DataGridComboBoxColumn.ElementStyle>
+                            <Style TargetType="ComboBox" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type ComboBox}, ResourceId=MaterialDataGridComboBoxColumnEditingStyle}}" >
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="20"/>
+                                <Setter Property="ItemsSource" Value="{Binding CargoCollection.PurchasePrizeDics}" />
+                                <Setter Property="ItemTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding UnitPurchasePrize, Converter={StaticResource DoubleToStringConverter}}"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </materialDesign:DataGridComboBoxColumn.ElementStyle>
+                    </materialDesign:DataGridComboBoxColumn>
+                    <materialDesign:DataGridTextColumn x:Name="Amount" Binding="{Binding SelectedPurchasePrizeDic.Amount, UpdateSourceTrigger=PropertyChanged}" Header="数量" Width="Auto" IsReadOnly="True" FontSize="20">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </materialDesign:DataGridTextColumn>
+                    <DataGridTemplateColumn x:Name="Operation" Header="操作" Width="*">
+                        <DataGridTemplateColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTemplateColumn.HeaderStyle>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="0,0,0,0">
+                                    <Button Content="详细信息" Command="{Binding ShowDetailCommand}" Margin="0,0,0,0" VerticalAlignment="Stretch"/>
+                                    <Button Content="卖出" Command="{Binding SellCommand}" CommandParameter="{Binding ElementName=Window}" Margin="0,0,0,0" VerticalAlignment="Stretch"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Name="OutOrderButton" Height="50" Width="200" materialDesign:ButtonAssist.CornerRadius="25 25 0 0" 
+                        Grid.Column="0" Content="订单详情" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold" IsEnabled="{Binding OutSellOrderButtonIsEnabled}"/>
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Column="1" 
+                    Margin="0 0 28 10" Content="{materialDesign:PackIcon Kind=Plus, Size=22}" Width="50" Height="50"
+                        Command="{Binding AddSellOrderCollectionCommand}"/>
+                
+            </Grid>
+            
+            
+            <Border Background="#EE444444" Height="600" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="0" Grid.RowSpan="3" 
+                    Margin="25,0,25,0" CornerRadius="15,15,0,0">
+                <Border.RenderTransform>
+                    <TranslateTransform Y="600" x:Name="tt"/>
+                </Border.RenderTransform>
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Left" Margin="10,0,0,0">
+                            <TextBlock FontFamily="Microsoft YaHei" FontSize="20" FontWeight="Bold" Text="顾客姓名 : " Foreground="White"
+                                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock FontFamily="Microsoft YaHei" FontSize="20" FontWeight="Bold" Text="{Binding SellOrderCollectionViewModel.SellOrderCollection.CustomerName}" Foreground="White"
+                                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,0">
+                            <TextBlock FontFamily="Microsoft YaHei" FontSize="20" FontWeight="Bold" Text="顾客电话 : " Foreground="White"
+                                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock FontFamily="Microsoft YaHei" FontSize="20" FontWeight="Bold" Text="{Binding SellOrderCollectionViewModel.SellOrderCollection.CustomerTel}" Foreground="White"
+                                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Left" Margin="10,0,0,0">
+                            <TextBlock FontFamily="Microsoft YaHei" FontSize="20" FontWeight="Bold" Text="总成本 : " Foreground="White"
+                                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock FontFamily="Microsoft YaHei" FontSize="20" FontWeight="Bold" Text="{Binding SellOrderCollectionViewModel.SellOrderCollection.TotalPurchasePrize}" Foreground="White"
+                                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="3" HorizontalAlignment="Left" Margin="10,0,0,0">
+                            <TextBlock FontFamily="Microsoft YaHei" FontSize="20" FontWeight="Bold" Text="总售价 : " Foreground="White"
+                                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock FontFamily="Microsoft YaHei" FontSize="20" FontWeight="Bold" Text="{Binding SellOrderCollectionViewModel.SellOrderCollection.TotalSellPrize}" Foreground="White"
+                                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="4" HorizontalAlignment="Left" Margin="10,0,0,0">
+                            <TextBlock FontFamily="Microsoft YaHei" FontSize="20" FontWeight="Bold" Text="总利润 : " Foreground="White"
+                                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock FontFamily="Microsoft YaHei" FontSize="20" FontWeight="Bold" Text="{Binding SellOrderCollectionViewModel.SellOrderCollection.TotalProfit}" Foreground="White"
+                                       Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Button x:Name="InOrderButton" Width="50" Height="50" Background="#EE444444" HorizontalAlignment="Right" VerticalAlignment="Top"
+                            materialDesign:ButtonAssist.CornerRadius="0,15,0,0" BorderThickness="0" Opacity="0.2" Grid.Column="5">
+                            <Button.Content>
+                                <materialDesign:PackIcon Background="#EE444444" Kind="CloseThick" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                    
+                    <DataGrid x:Name="OrderDataGrid"  Margin="20,0,20,0" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" 
+                              ItemsSource="{Binding SellOrderCollectionViewModel.SellOrderViewModels}" CanUserAddRows="False" GridLinesVisibility="All"  SelectionUnit="Cell" SelectionMode="Extended" 
+                              Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AutoGenerateColumns="False" HorizontalContentAlignment="Center"
+                               Background="LightGray">
+                        <DataGrid.Columns>
+                            <materialDesign:DataGridTextColumn Binding="{Binding SellOrder.CargoName}" Header="商品名" Width="Auto" IsReadOnly="True" FontSize="20">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:DataGridTextColumn>
+                            <materialDesign:DataGridTextColumn Binding="{Binding SellOrder.Category}" Header="类别" Width="Auto" IsReadOnly="True" FontSize="20">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:DataGridTextColumn>
+                            <materialDesign:DataGridTextColumn Binding="{Binding SellOrder.Material}" Header="材料" Width="Auto" IsReadOnly="True" FontSize="20">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:DataGridTextColumn>
+                            <materialDesign:DataGridTextColumn Binding="{Binding SellOrder.Size}" Header="尺寸" Width="Auto" IsReadOnly="True" FontSize="20">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:DataGridTextColumn>
+                            <materialDesign:DataGridTextColumn Binding="{Binding SellOrder.WarehouseName}" Header="仓库" Width="Auto" IsReadOnly="True" FontSize="20">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:DataGridTextColumn>
+                            <materialDesign:DataGridTextColumn Binding="{Binding SellOrder.PlaneName}" Header="楼层" Width="Auto" IsReadOnly="True" FontSize="20">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:DataGridTextColumn>
+                            <materialDesign:DataGridTextColumn Binding="{Binding SellOrder.BlockName}" Header="区域" Width="Auto" IsReadOnly="True" FontSize="20">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:DataGridTextColumn>
+                            <materialDesign:DataGridTextColumn Binding="{Binding SellOrder.AvgUnitPurchasePrize}" Header="平均进价" Width="Auto" IsReadOnly="True" FontSize="20">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:DataGridTextColumn>
+                            <materialDesign:DataGridTextColumn Binding="{Binding SellOrder.UnitSellPrize}" Header="单位售价" Width="Auto" IsReadOnly="True" FontSize="20">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:DataGridTextColumn>
+
+                            <materialDesign:DataGridTextColumn Binding="{Binding SellOrder.Amount}" Header="数量" Width="Auto" IsReadOnly="True" FontSize="20">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignDataGridTextColumnStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:DataGridTextColumn>
+                            <DataGridTemplateColumn x:Name="OrderOperation" Header="操作" Width="*">
+                                <DataGridTemplateColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap" Text="{Binding}" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTemplateColumn.HeaderStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="0,0,0,0">
+                                            <Button Content="删除" Command="{Binding DeleteCommand}" Margin="0,0,0,0" VerticalAlignment="Stretch"
+                                                    CommandParameter="{Binding ElementName=OrderDataGrid}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Width="160" Height="40" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                Margin="120,0,0,0" materialDesign:ButtonAssist.CornerRadius="8,8,8,8" Content="删除订单"
+                                FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold" x:Name="DeleteOrderCollectionButton"
+                                Command="{Binding DeleteSellOrderCollectionCommand}"/>
+                        <Button Grid.Column="1" Width="160" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Margin="0,0,120,0" materialDesign:ButtonAssist.CornerRadius="8,8,8,8" Content="确认订单"
+                                FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold" x:Name="ConfirmOrderCollectionButton"
+                                Command="{Binding ConfirmSellOrderCollectionCommand}"/>
+                    </Grid>
+
+
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Border>
+    
+</UserControl>

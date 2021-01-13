@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -14,6 +15,8 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,8 +37,28 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FuzzySharp, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\FuzzySharp.2.0.2\lib\net461\FuzzySharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.2.7.1979, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
+      <HintPath>packages\MaterialDesignColors.1.2.7\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=3.2.0.1979, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
+      <HintPath>packages\MaterialDesignThemes.3.2.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +78,96 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\DelegateCommand.cs" />
+    <Compile Include="Converter\ByteToBitmapImageConverter.cs" />
+    <Compile Include="Converter\DoubleToStringConverter.cs" />
+    <Compile Include="Exception\MyException.cs" />
+    <Compile Include="Model\Block.cs" />
+    <Compile Include="Model\Cargo.cs" />
+    <Compile Include="Model\CargoCollection.cs" />
+    <Compile Include="Model\LogPurchaseOrder.cs" />
+    <Compile Include="Model\LogPurchaseOrderCollection.cs" />
+    <Compile Include="Model\LogSellOrder.cs" />
+    <Compile Include="Model\LogSellOrderCollection.cs" />
+    <Compile Include="Model\PurchaseOrder.cs" />
+    <Compile Include="Model\PurchaseOrderCollection.cs" />
+    <Compile Include="Model\SellOrder.cs" />
+    <Compile Include="Model\Plane.cs" />
+    <Compile Include="Model\PurchasePrizeDic.cs" />
+    <Compile Include="Model\SellOrderCollection.cs" />
+    <Compile Include="Model\Warehouse.cs" />
+    <Compile Include="Service\LocalDataService.cs" />
+    <Compile Include="ViewModel\AddBlockWindowViewModel.cs" />
+    <Compile Include="ViewModel\AddCargoWindowViewModel.cs" />
+    <Compile Include="ViewModel\AddPlaneWindowViewModel.cs" />
+    <Compile Include="ViewModel\AddPurchaseOrderCollectionWindowViewModel.cs" />
+    <Compile Include="ViewModel\AddPurchaseOrderWindowViewModel.cs" />
+    <Compile Include="ViewModel\AddSellOrderCollectionWindowViewModel.cs" />
+    <Compile Include="ViewModel\AddSellOrderWindowViewModel.cs" />
+    <Compile Include="ViewModel\AddWarehouseWindowViewModel.cs" />
+    <Compile Include="ViewModel\BlockViewModel.cs" />
+    <Compile Include="ViewModel\CargoCollectionDetailWindowViewModel.cs" />
+    <Compile Include="ViewModel\CargoCollectionViewModel.cs" />
+    <Compile Include="ViewModel\CargoDetailWindowViewModel.cs" />
+    <Compile Include="ViewModel\CargoViewModel.cs" />
+    <Compile Include="ViewModel\CategoryManagementUserControlViewModel.cs" />
+    <Compile Include="ViewModel\LogPurchaseOrderUserControlViewModel.cs" />
+    <Compile Include="ViewModel\LogSellOrderUserControlViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\NotificationObject.cs" />
+    <Compile Include="ViewModel\PlaneViewModel.cs" />
+    <Compile Include="ViewModel\PromptWindowViewModel.cs" />
+    <Compile Include="ViewModel\PurchaseCargoUserControlViewModel.cs" />
+    <Compile Include="ViewModel\PurchaseOrderCollectionDetailWindowViewModel.cs" />
+    <Compile Include="ViewModel\PurchaseOrderCollectionViewModel.cs" />
+    <Compile Include="ViewModel\PurchaseOrderViewModel.cs" />
+    <Compile Include="ViewModel\SearchUserControlViewModel.cs" />
+    <Compile Include="ViewModel\SellCargoUserControlViewModel.cs" />
+    <Compile Include="ViewModel\SellOrderCollectionDetailWindowViewModel.cs" />
+    <Compile Include="ViewModel\SellOrderCollectionViewModel.cs" />
+    <Compile Include="ViewModel\SellOrderViewModel.cs" />
+    <Compile Include="ViewModel\WarehouseRootViewModel.cs" />
+    <Compile Include="ViewModel\WarehouseViewModel.cs" />
+    <Compile Include="ViewModel\WarningWindowViewModel.cs" />
+    <Compile Include="View\AddBlockWindow.xaml.cs">
+      <DependentUpon>AddBlockWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddCargoWindow.xaml.cs">
+      <DependentUpon>AddCargoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddPlaneWindow.xaml.cs">
+      <DependentUpon>AddPlaneWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddPurchaseOrderCollectionWindow.xaml.cs">
+      <DependentUpon>AddPurchaseOrderCollectionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddPurchaseOrderWindow.xaml.cs">
+      <DependentUpon>AddPurchaseOrderWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddSellOrderCollectionWindow.xaml.cs">
+      <DependentUpon>AddSellOrderCollectionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddSellOrderWindow.xaml.cs">
+      <DependentUpon>AddSellOrderWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddWarehouseWindow.xaml.cs">
+      <DependentUpon>AddWarehouseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CargoCollectionDetailWindow.xaml.cs">
+      <DependentUpon>CargoCollectionDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CargoDetailWindow.xaml.cs">
+      <DependentUpon>CargoDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CategoryManagementUserControl.xaml.cs">
+      <DependentUpon>CategoryManagementUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LogPurchaseOrderUserControl.xaml.cs">
+      <DependentUpon>LogPurchaseOrderUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LogSellOrderUserControl.xaml.cs">
+      <DependentUpon>LogSellOrderUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -62,7 +175,116 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="View\PromptWindow.xaml.cs">
+      <DependentUpon>PromptWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PurchaseCargoUserControl.xaml.cs">
+      <DependentUpon>PurchaseCargoUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PurchaseOrderCollectionDetailWindow.xaml.cs">
+      <DependentUpon>PurchaseOrderCollectionDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchUserControl.xaml.cs">
+      <DependentUpon>SearchUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SellCargoUserControl.xaml.cs">
+      <DependentUpon>SellCargoUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SellOrderCollectionDetailWindow.xaml.cs">
+      <DependentUpon>SellOrderCollectionDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\WarehouseManagementUserControl.xaml.cs">
+      <DependentUpon>WarehouseManagementUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\WarehouseManagementUserControlViewModel.cs" />
+    <Compile Include="View\WarningWindow.xaml.cs">
+      <DependentUpon>WarningWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\AddBlockWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddCargoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPlaneWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPurchaseOrderCollectionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPurchaseOrderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddSellOrderCollectionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddSellOrderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddWarehouseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CargoCollectionDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CargoDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CategoryManagementUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LogPurchaseOrderUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LogSellOrderUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PromptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PurchaseCargoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PurchaseOrderCollectionDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SearchUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SellCargoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SellOrderCollectionDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WarehouseManagementUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WarningWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -85,6 +307,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,10 +316,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="DataAccess\" />
-    <Folder Include="Model\" />
-    <Folder Include="ViewModel\" />
+    <Resource Include="Resources\WarnIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>
