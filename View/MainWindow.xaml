@@ -1,13 +1,67 @@
-﻿<Window x:Class="CargoManagementSystem.View.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CargoManagementSystem.View"
+        xmlns:local="clr-namespace:CargoManagementSystem.View" 
+        x:Class="CargoManagementSystem.View.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="仓库管理系统" Height="720" Width="1300" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="170,81,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Style="{DynamicResource RoundCornerTextBoxStyle}"/>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Background="#FFFFFF" Grid.Column="0">
+            <Border.Effect>
+                <DropShadowEffect Color="#828282" ShadowDepth="20" Opacity="0.1" BlurRadius="30"/>
+            </Border.Effect>
+        </Border>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="DarkGray" BorderThickness="0 0 0 1" Margin="25 0 25 0">
+                <TextBlock Text="功能列表" Style="{StaticResource MaterialDesignHeadline6TextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+            <StackPanel Grid.Row="1">
+                <Button x:Name="SearchButton" Style="{DynamicResource MaterialDesignRaisedButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="15 30 15 0" Click="ShowSearchView">
+                    <TextBlock Text="货物查询" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
+                </Button>
+                <Button x:Name="WarehouseManagementButton" Style="{DynamicResource MaterialDesignRaisedButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="15 30 15 0" Click="ShowWarehouseManagementView">
+                    <TextBlock Text="仓库管理" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
+                </Button>
+                <Button x:Name="CatgoryManagementButton" Style="{DynamicResource MaterialDesignRaisedButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="15 30 15 0" Click="ShowCategoryManagementView">
+                    <TextBlock Text="货品管理" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
+                </Button>
+                <Button x:Name="SellCargoButton" Style="{DynamicResource MaterialDesignRaisedButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="15 30 15 0" Click="ShowSellCargoView">
+                    <TextBlock Text="卖货订单管理" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
+                </Button>
+                <Button x:Name="PurchaseCargoButton" Style="{DynamicResource MaterialDesignRaisedButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="15 30 15 0" Click="ShowPurchaseCargoView">
+                    <TextBlock Text="进货订单管理" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
+                </Button>
+                <Button Style="{DynamicResource MaterialDesignRaisedButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="15 30 15 0" Click="ShowLogPurchaseOrderView">
+                    <TextBlock Text="历史进货订单" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
+                </Button>
+                <Button Style="{DynamicResource MaterialDesignRaisedButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="15 30 15 0" Click="ShowLogSellOrderView">
+                    <TextBlock Text="历史卖货订单" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
+                </Button>
+                
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="ShowPanel" Grid.Column="1" Margin="20,20,20,0">
+            
+        </Grid>
+        
+        
     </Grid>
 </Window>
