@@ -19,7 +19,7 @@ namespace CargoManagementSystem.ViewModel
             set { _block = value;  RaisePropertyChanged("Block"); }
         }
 
-        public Action<Block> CallBack { get; set; }
+        public Func<Block, bool> CallBack { get; set; }
         public DelegateCommand CancelCommand { get; set; }
         public DelegateCommand ConfirmCommand { get; set; }
         public AddBlockWindowViewModel()
@@ -37,9 +37,29 @@ namespace CargoManagementSystem.ViewModel
         }
         private void ConfirmExecute(object parameter)
         {
-            AddBlockWindow AddBlockWindow = parameter as AddBlockWindow;
-            CallBack(Block);
-            AddBlockWindow.Close();
+            if (string.IsNullOrWhiteSpace(Block.BlockName))
+            {
+                string message = "区域名称不能为空";
+                string detailMessage = "区域名称不允许为空";
+                WarningWindow warn = new WarningWindow(message, detailMessage);
+                warn.ShowDialog();
+            }
+            else
+            {
+                AddBlockWindow AddBlockWindow = parameter as AddBlockWindow;
+                bool IsExist = CallBack(Block);
+                if (IsExist == true)
+                {
+                    string message = "该层已存在相同名字的区域";
+                    string detailMessage = "同一层中的区域名字不允许重复";
+                    WarningWindow warn = new WarningWindow(message, detailMessage);
+                    warn.ShowDialog();
+                }
+                else
+                {
+                    AddBlockWindow.Close();
+                }
+            }
         }
     }
 }

@@ -21,7 +21,12 @@ namespace CargoManagementSystem.ViewModel
         public DelegateCommand DeleteCommand { get; set; }
         public DelegateCommand PurchaseCommand { get; set; }
         public CargoManagementContext CMContext { get; set; }
-        public ObservableCollection<CargoViewModel> CargoViewModels { get; set; }
+        private ObservableCollection<CargoViewModel> _cargoViewModels;
+        public ObservableCollection<CargoViewModel> CargoViewModels
+        {
+            get { return _cargoViewModels; }
+            set { _cargoViewModels = value; RaisePropertyChanged("CargoViewModels"); }
+        }
         public ObservableCollection<CargoCollectionViewModel> CargoCollectionViewModels { get; set; }
         public Cargo Cargo { get; set; }
         public bool PurchaseButtonIsEnabled
@@ -57,15 +62,22 @@ namespace CargoManagementSystem.ViewModel
         }
         public void DeleteExecute(object parameter)
         {
-            var p = CargoCollectionViewModels.Where<CargoCollectionViewModel>
-                (item => item.CargoCollection.PreciseCargoName == Cargo.PreciseCargoName).ToList();
-            foreach (var i in p)
+            string message = "是否删除该品类";
+            string detailMessage = "删除该品类将会删除所有库存中该品类的商品";
+            PromptWindow prompt = new PromptWindow(message, detailMessage);
+            bool? IsConfirmed = prompt.ShowDialog();
+            if (IsConfirmed == true)
             {
-                i.DeleteCargoCollection();
+                var p = CargoCollectionViewModels.Where<CargoCollectionViewModel>
+                (item => item.CargoCollection.PreciseCargoName == Cargo.PreciseCargoName).ToList();
+                foreach (var i in p)
+                {
+                    i.DeleteCargoCollection();
+                }
+                CMContext.Cargo.Remove(Cargo);
+                CargoViewModels.Remove(this);
+                CMContext.SaveChanges();
             }
-            CMContext.Cargo.Remove(Cargo);
-            CargoViewModels.Remove(this);
-            CMContext.SaveChanges();
         }
         public bool AddPurchaseOrderCanExecute(object parameter)
         {

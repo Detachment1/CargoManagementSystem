@@ -13,7 +13,7 @@ namespace CargoManagementSystem.ViewModel
     {
         public Warehouse Warehouse { get; set; }
 
-        public Action<Warehouse> CallBack { get; set; }
+        public Func<Warehouse, bool> CallBack { get; set; }
         public DelegateCommand CancelCommand { get; set; }
         public DelegateCommand ConfirmCommand { get; set; }
         public AddWarehouseWindowViewModel()
@@ -31,9 +31,29 @@ namespace CargoManagementSystem.ViewModel
         }
         private void ConfirmExecute(object parameter)
         {
-            AddWarehouseWindow AddWarehouseWindow = parameter as AddWarehouseWindow;
-            CallBack(Warehouse);
-            AddWarehouseWindow.Close();
+            if (string.IsNullOrWhiteSpace(Warehouse.WarehouseName))
+            {
+                string message = "仓库名称不能为空";
+                string detailMessage = "仓库名称不允许为空";
+                WarningWindow warn = new WarningWindow(message, detailMessage);
+                warn.ShowDialog();
+            }
+            else
+            {
+                AddWarehouseWindow AddWarehouseWindow = parameter as AddWarehouseWindow;
+                bool IsExist = CallBack(Warehouse);
+                if (IsExist == true)
+                {
+                    string message = "已存在相同名字的仓库";
+                    string detailMessage = "仓库名字不允许重复";
+                    WarningWindow warn = new WarningWindow(message, detailMessage);
+                    warn.ShowDialog();
+                }
+                else
+                {
+                    AddWarehouseWindow.Close();
+                }
+            }
         }
     }
 }

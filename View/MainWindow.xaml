@@ -44,10 +44,10 @@
                     <TextBlock Text="货品管理" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
                 </Button>
                 <Button x:Name="SellCargoButton" Style="{DynamicResource MaterialDesignRaisedButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="15 30 15 0" Click="ShowSellCargoView">
-                    <TextBlock Text="卖货订单管理" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
+                    <TextBlock Text="卖  货" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
                 </Button>
                 <Button x:Name="PurchaseCargoButton" Style="{DynamicResource MaterialDesignRaisedButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="15 30 15 0" Click="ShowPurchaseCargoView">
-                    <TextBlock Text="进货订单管理" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
+                    <TextBlock Text="进  货" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>
                 </Button>
                 <Button Style="{DynamicResource MaterialDesignRaisedButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="15 30 15 0" Click="ShowLogPurchaseOrderView">
                     <TextBlock Text="历史进货订单" FontFamily="Microsoft YaHei" FontSize="15" FontWeight="Bold"/>

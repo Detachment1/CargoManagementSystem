@@ -6,11 +6,13 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace CargoManagementSystem.ViewModel
 {
@@ -19,6 +21,7 @@ namespace CargoManagementSystem.ViewModel
         public DelegateCommand SearchCommand { get; set; }
         public CargoManagementContext CMContext { get; set; }
         public ObservableCollection<CargoCollectionViewModel> CargoCollectionViewModels { get; set; }
+        public ICollectionView CargoCollectionViewModelsView { get; set; }
         private string _searchString;
         public string SearchString
         {
@@ -29,6 +32,8 @@ namespace CargoManagementSystem.ViewModel
         {
             CMContext = cmContext;
             CargoCollectionViewModels = ccvms;
+            CargoCollectionViewModelsView = CollectionViewSource.GetDefaultView(CargoCollectionViewModels);
+            CargoCollectionViewModelsView.SortDescriptions.Add(new SortDescription("OrderScore", ListSortDirection.Descending));
             SearchCommand = new DelegateCommand() { ExecuteAction = new Action<object>(SearchExecute)};
         }
         private void SearchExecute(object parameter)
@@ -39,9 +44,10 @@ namespace CargoManagementSystem.ViewModel
                 {
                     cargoCollectionViewModel.UpdateOrderScore(SearchString);
                 }
-                DataGrid grid = parameter as DataGrid;
-                CargoCollectionViewModels = new ObservableCollection<CargoCollectionViewModel>(CargoCollectionViewModels.OrderByDescending(item => item.OrderScore));
-                grid.ItemsSource = CargoCollectionViewModels;
+                CargoCollectionViewModelsView.Refresh();
+                //DataGrid grid = parameter as DataGrid;
+                //CargoCollectionViewModels = new ObservableCollection<CargoCollectionViewModel>(CargoCollectionViewModels.OrderByDescending(item => item.OrderScore));
+                //grid.ItemsSource = CargoCollectionViewModels;
             }      
         }
     }

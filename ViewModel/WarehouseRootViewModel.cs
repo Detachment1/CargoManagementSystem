@@ -26,21 +26,36 @@ namespace CargoManagementSystem.ViewModel
         {
             AddWarehouseWindow addWarehouseWindow = new AddWarehouseWindow();
             AddWarehouseWindowViewModel AddWarehouseWindowvm = addWarehouseWindow.DataContext as AddWarehouseWindowViewModel;
-            AddWarehouseWindowvm.CallBack = new Action<Warehouse>(CallBack);
+            AddWarehouseWindowvm.CallBack = new Func<Warehouse, bool>(CallBack);
             addWarehouseWindow.Show();
         }
-        public void CallBack(Warehouse warehouse)
+        public bool CallBack(Warehouse warehouse)
         {
             if (warehouse != null)
             {
-                WarehouseViewModel warehouseViewModel = new WarehouseViewModel(CMContext)
+                bool IsExist = WarehouseViewModels.Any<WarehouseViewModel>
+                    (item => item.Warehouse.WarehouseName == warehouse.WarehouseName);
+                if (!IsExist)
                 {
-                    Warehouse = warehouse,
-                    WarehouseRootViewModel = this
-                };
-                CMContext.Warehouse.Add(warehouse);
-                WarehouseViewModels.Add(warehouseViewModel);
-                CMContext.SaveChanges();
+                    WarehouseViewModel warehouseViewModel = new WarehouseViewModel(CMContext)
+                    {
+                        Warehouse = warehouse,
+                        WarehouseRootViewModel = this
+                    };
+                    CMContext.Warehouse.Add(warehouse);
+                    WarehouseViewModels.Add(warehouseViewModel);
+                    CMContext.SaveChanges();
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                
+            }
+            else
+            {
+                return false;
             }
         }
     }

@@ -54,13 +54,14 @@ namespace CargoManagementSystem.ViewModel
             {
                 // Open document 
                 ImagePath = dlg.FileName;
+                FileStream fs = new FileStream(ImagePath, FileMode.Open);
+                byte[] byData = new byte[fs.Length];
+                fs.Read(byData, 0, byData.Length);
+                fs.Close();
+                Cargo.CargoImage = byData;
+                CMContext.SaveChanges();
             }
-            FileStream fs = new FileStream(ImagePath, FileMode.Open);
-            byte[] byData = new byte[fs.Length];
-            fs.Read(byData, 0, byData.Length);
-            fs.Close();
-            Cargo.CargoImage = byData;
-            CMContext.SaveChanges();
+            
         }
         private void DeleteImageExecute(object parameter)
         {

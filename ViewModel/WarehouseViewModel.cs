@@ -49,23 +49,38 @@ namespace CargoManagementSystem.ViewModel
         {
             AddPlaneWindow addPlaneWindow = new AddPlaneWindow();
             AddPlaneWindowViewModel AddPlaneWindowvm = addPlaneWindow.DataContext as AddPlaneWindowViewModel;
-            AddPlaneWindowvm.CallBack = new Action<Plane>(CallBack);
+            AddPlaneWindowvm.CallBack = new Func<Plane, bool>(CallBack);
             addPlaneWindow.Show();
             
         }
-        public void CallBack(Plane plane)
+        public bool CallBack(Plane plane)
         {
             if (plane != null)
             {
-                plane.WarehouseName = Warehouse.WarehouseName;
-                PlaneViewModel planeViewModel = new PlaneViewModel(CMContext)
+                bool IsExist = PlaneViewModels.Any<PlaneViewModel>
+                    (item => item.Plane.PlaneName == plane.PlaneName);
+                if (!IsExist)
                 {
-                    WarehouseViewModel = this,
-                    Plane = plane
-                };
-                CMContext.Plane.Add(plane);
-                CMContext.SaveChanges();
-                PlaneViewModels.Add(planeViewModel);
+                    plane.WarehouseName = Warehouse.WarehouseName;
+                    PlaneViewModel planeViewModel = new PlaneViewModel(CMContext)
+                    {
+                        WarehouseViewModel = this,
+                        Plane = plane
+                    };
+                    CMContext.Plane.Add(plane);
+                    CMContext.SaveChanges();
+                    PlaneViewModels.Add(planeViewModel);
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                
+            }
+            else
+            {
+                return false;
             }
         }
         public void DeleteCargoCollections()

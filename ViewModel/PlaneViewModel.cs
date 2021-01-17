@@ -31,7 +31,7 @@ namespace CargoManagementSystem.ViewModel
         {
             AddBlockWindow addBlockWindow = new AddBlockWindow();
             AddBlockWindowViewModel AddBlockWindowvm = addBlockWindow.DataContext as AddBlockWindowViewModel;
-            AddBlockWindowvm.CallBack = new Action<Block>(CallBack);
+            AddBlockWindowvm.CallBack = new Func<Block, bool>(CallBack);
             addBlockWindow.Show();
         }
         public void DeletePlaneExecute(object parameter)
@@ -52,20 +52,34 @@ namespace CargoManagementSystem.ViewModel
             }
             
         }
-        public void CallBack(Block block)
+        public bool CallBack(Block block)
         {
             if (block != null)
             {
-                block.WarehouseName = Plane.WarehouseName;
-                block.PlaneName = Plane.PlaneName;
-                BlockViewModel newBlockViewModel = new BlockViewModel(CMContext)
+                bool IsExist = BlockViewModels.Any<BlockViewModel>
+                    (item => item.Block.BlockName == block.BlockName);
+                if (!IsExist)
                 {
-                    Block = block,
-                    PlaneViewModel = this
-                };
-                CMContext.Block.Add(block);
-                BlockViewModels.Add(newBlockViewModel);
-                CMContext.SaveChanges();
+                    block.WarehouseName = Plane.WarehouseName;
+                    block.PlaneName = Plane.PlaneName;
+                    BlockViewModel newBlockViewModel = new BlockViewModel(CMContext)
+                    {
+                        Block = block,
+                        PlaneViewModel = this
+                    };
+                    CMContext.Block.Add(block);
+                    BlockViewModels.Add(newBlockViewModel);
+                    CMContext.SaveChanges();
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }   
+            }
+            else
+            {
+                return false;
             }
         }
         public void DeleteCargoCollections()

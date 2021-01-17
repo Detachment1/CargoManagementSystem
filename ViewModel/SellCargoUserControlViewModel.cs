@@ -6,11 +6,13 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace CargoManagementSystem.ViewModel
 {
@@ -22,10 +24,17 @@ namespace CargoManagementSystem.ViewModel
         public DelegateCommand AddSellOrderCollectionCommand { get; set; }
         public DelegateCommand DeleteSellOrderCollectionCommand { get; set; }
         public DelegateCommand ConfirmSellOrderCollectionCommand { get; set; }
+        public DelegateCommand SearchCommand { get; set; }
         public bool OutSellOrderButtonIsEnabled
         {
             get { return _outSellOrderButtonIsEnabled; }
             set { _outSellOrderButtonIsEnabled = value; RaisePropertyChanged("OutSellOrderButtonIsEnabled"); }
+        }
+        private string _searchString;
+        public string SearchString
+        {
+            get { return _searchString; }
+            set { _searchString = value; RaisePropertyChanged("SearchString"); }
         }
         public SellOrderCollectionViewModel SellOrderCollectionViewModel
         {
@@ -34,7 +43,7 @@ namespace CargoManagementSystem.ViewModel
         }
         public ObservableCollection<CargoCollectionViewModel> CargoCollectionViewModels { get; set; }
         public ObservableCollection<SellOrderCollectionViewModel> SellOrderCollectionViewModels { get; set; }
-
+        public ICollectionView CargoCollectionViewModelsView { get; set; }
         public SellCargoUserControlViewModel(CargoManagementContext cmContext,
             ObservableCollection<CargoCollectionViewModel> ccvms,
             ObservableCollection<SellOrderCollectionViewModel> socvms)
@@ -43,10 +52,12 @@ namespace CargoManagementSystem.ViewModel
             OutSellOrderButtonIsEnabled = false;
             CargoCollectionViewModels = ccvms;
             SellOrderCollectionViewModels = socvms;
-
+            CargoCollectionViewModelsView = CollectionViewSource.GetDefaultView(CargoCollectionViewModels);
+            CargoCollectionViewModelsView.SortDescriptions.Add(new SortDescription("OrderScore", ListSortDirection.Descending));
             AddSellOrderCollectionCommand = new DelegateCommand() { ExecuteAction = new Action<object>(AddSellOrderCollectionExecute)};
             DeleteSellOrderCollectionCommand = new DelegateCommand() { ExecuteAction = new Action<object>(DeleteSellOrderCollectionExecute) };
             ConfirmSellOrderCollectionCommand = new DelegateCommand() { ExecuteAction = new Action<object>(ConfirmSellOrderCollectionExecute) };
+            SearchCommand = new DelegateCommand() { ExecuteAction = new Action<object>(SearchExecute) };
         }
 
         private void AddSellOrderCollectionExecute(object parameter)
@@ -158,6 +169,19 @@ namespace CargoManagementSystem.ViewModel
                 SellOrderCollectionViewModel.SellOrderCollection = sellOrderCollection;
             }
         }
-
+        private void SearchExecute(object parameter)
+        {
+            if (SearchString != null)
+            {
+                foreach (var cargoCollectionViewModel in CargoCollectionViewModels)
+                {
+                    cargoCollectionViewModel.UpdateOrderScore(SearchString);
+                }
+                CargoCollectionViewModelsView.Refresh();
+                //DataGrid grid = parameter as DataGrid;
+                //CargoCollectionViewModels = new ObservableCollection<CargoCollectionViewModel>(CargoCollectionViewModels.OrderByDescending(item => item.OrderScore));
+                //grid.ItemsSource = CargoCollectionViewModels;
+            }
+        }
     }
 }

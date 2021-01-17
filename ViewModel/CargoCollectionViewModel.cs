@@ -42,14 +42,14 @@ namespace CargoManagementSystem.ViewModel
             SelectedPurchasePrizeDic = new PurchasePrizeDic();
             ShowDetailCommand = new DelegateCommand() { ExecuteAction = new Action<object>(ShowDetailExecute) };
             SellCommand = new DelegateCommand() { ExecuteAction = new Action<object>(AddSellOrderExecute) };
-            DeleteCargoCollectionCommand = new DelegateCommand() { ExecuteAction = new Action<object>(DeleteCargoCollectionExecute) };
+            DeleteCargoCollectionCommand = new DelegateCommand() { ExecuteAction = new Action<object>(DeleteCargoCollectionExecute), CanExecuteFunc = new Func<object, bool>(AddSellOrderCanExecute) };
         }
         public CargoCollectionViewModel(CargoManagementContext cmContext)
         {
             CMContext = cmContext;
             SelectedPurchasePrizeDic = new PurchasePrizeDic();
             ShowDetailCommand = new DelegateCommand() { ExecuteAction = new Action<object>(ShowDetailExecute) };
-            SellCommand = new DelegateCommand() { ExecuteAction = new Action<object>(AddSellOrderExecute) };
+            SellCommand = new DelegateCommand() { ExecuteAction = new Action<object>(AddSellOrderExecute), CanExecuteFunc = new Func<object, bool>(AddSellOrderCanExecute) };
         }
         public CargoCollectionViewModel(CargoManagementContext cmContext, PurchaseOrderViewModel purchaseOrderViewModel)
         {
@@ -57,7 +57,7 @@ namespace CargoManagementSystem.ViewModel
             CargoCollection = new CargoCollection(purchaseOrderViewModel.PurchaseOrder);
             SelectedPurchasePrizeDic = new PurchasePrizeDic();
             ShowDetailCommand = new DelegateCommand() { ExecuteAction = new Action<object>(ShowDetailExecute) };
-            SellCommand = new DelegateCommand() { ExecuteAction = new Action<object>(AddSellOrderExecute) };
+            SellCommand = new DelegateCommand() { ExecuteAction = new Action<object>(AddSellOrderExecute) , CanExecuteFunc = new Func<object, bool>(AddSellOrderCanExecute)};
         }
         public void UpdateOrderScore(string SearchString)
         {
@@ -73,6 +73,19 @@ namespace CargoManagementSystem.ViewModel
         public void DeleteCargoCollectionExecute(object parameter)
         {
             DeleteCargoCollection();
+        }
+        public bool AddSellOrderCanExecute(object parameter)
+        {
+            SellCargoUserControl sc = parameter as SellCargoUserControl;
+            SellCargoUserControlViewModel scvm = sc.DataContext as SellCargoUserControlViewModel;
+            if (scvm.SellOrderCollectionViewModel == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
         public void AddSellOrderExecute(object parameter)
         {

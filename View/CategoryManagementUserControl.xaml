@@ -29,7 +29,7 @@
             </Grid>
 
             <DataGrid x:Name="DataGrid"  Margin="20,0,20,0" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" 
-                      ItemsSource="{Binding CargoViewModels}" CanUserAddRows="False" GridLinesVisibility="All"  SelectionUnit="Cell" 
+                      ItemsSource="{Binding CargoViewModelsView}" CanUserAddRows="False" GridLinesVisibility="All"  SelectionUnit="Cell" 
                       SelectionMode="Extended" Grid.Row="1" VerticalAlignment="Stretch" AutoGenerateColumns="False" 
                       HorizontalContentAlignment="Center">
                 <DataGrid.Columns>

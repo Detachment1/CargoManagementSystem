@@ -55,11 +55,11 @@
                           Grid.Column="0" Style="{DynamicResource MaterialDesignOutlinedTextFieldTextBox}"
                           FontSize="20"/>
                 <Button Grid.Column="1" Margin="20,0,20,0" HorizontalAlignment="Stretch" Height="50" VerticalAlignment="Center" Style="{StaticResource MaterialDesignRaisedLightButton}" ToolTip="Resource name: MaterialDesignRaisedLightButton" 
-                        Content="查询" FontSize="20"/>
+                        Content="查询" FontSize="20" Command="{Binding SearchCommand}"/>
             </Grid>
 
             <DataGrid x:Name="DataGrid" Margin="20,0,20,0" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" 
-                      ItemsSource="{Binding CargoCollectionViewModels}" CanUserAddRows="False" GridLinesVisibility="All"  SelectionUnit="Cell" 
+                      ItemsSource="{Binding CargoCollectionViewModelsView}" CanUserAddRows="False" GridLinesVisibility="All"  SelectionUnit="Cell" 
                       SelectionMode="Extended" Grid.Row="1" VerticalAlignment="Stretch" AutoGenerateColumns="False" 
                       HorizontalContentAlignment="Center">
                 <DataGrid.Columns>

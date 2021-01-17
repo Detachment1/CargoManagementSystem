@@ -5,11 +5,13 @@ using CargoManagementSystem.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace CargoManagementSystem.ViewModel
 {
@@ -21,6 +23,13 @@ namespace CargoManagementSystem.ViewModel
         public DelegateCommand AddPurchaseOrderCollectionCommand { get; set; }
         public DelegateCommand DeletePurchaseOrderCollectionCommand { get; set; }
         public DelegateCommand ConfirmPurchaseOrderCollectionCommand { get; set; }
+        public DelegateCommand SearchCommand { get; set; }
+        private string _searchString;
+        public string SearchString
+        {
+            get { return _searchString; }
+            set { _searchString = value; RaisePropertyChanged("SearchString"); }
+        }
         public bool OutPurchaseOrderButtonIsEnabled
         {
             get { return _outPurchaseOrderButtonIsEnabled; }
@@ -33,8 +42,14 @@ namespace CargoManagementSystem.ViewModel
         }
         public WarehouseRootViewModel WarehouseRootViewModel { get; set; }
         public ObservableCollection<PurchaseOrderCollectionViewModel> PurchaseOrderCollectionViewModels { get; set; }
-        public ObservableCollection<CargoViewModel> CargoViewModels { get; set; }
+        private ObservableCollection<CargoViewModel> _cargoViewModels;
+        public ObservableCollection<CargoViewModel> CargoViewModels
+        {
+            get { return _cargoViewModels; }
+            set { _cargoViewModels = value; RaisePropertyChanged("CargoViewModels"); }
+        }
         public ObservableCollection<CargoCollectionViewModel> CargoCollectionViewModels { get; set; }
+        public ICollectionView CargoViewModelsView { get; set; }
         public PurchaseCargoUserControlViewModel(CargoManagementContext cmContext, 
             WarehouseRootViewModel wrvm, ObservableCollection<CargoViewModel> cvms, 
             ObservableCollection<CargoCollectionViewModel> ccvms,
@@ -46,9 +61,12 @@ namespace CargoManagementSystem.ViewModel
             CargoCollectionViewModels = ccvms;
             PurchaseOrderCollectionViewModels = pocvms;
             OutPurchaseOrderButtonIsEnabled = false;
+            CargoViewModelsView = CollectionViewSource.GetDefaultView(CargoViewModels);
+            CargoViewModelsView.SortDescriptions.Add(new SortDescription("OrderScore", ListSortDirection.Descending));
             AddPurchaseOrderCollectionCommand = new DelegateCommand() { ExecuteAction = new Action<object>(AddPurchaseOrderCollectionExecute)};
             DeletePurchaseOrderCollectionCommand = new DelegateCommand() { ExecuteAction = new Action<object>(DeletePurchaseOrderCollectionExecute) };
             ConfirmPurchaseOrderCollectionCommand = new DelegateCommand() { ExecuteAction = new Action<object>(ConfirmPurchaseOrderCollectionExecute) };
+            SearchCommand = new DelegateCommand() { ExecuteAction = new Action<object>(SearchExecute) };
         }
         private void AddPurchaseOrderCollectionExecute(object parameter)
         {
@@ -130,6 +148,20 @@ namespace CargoManagementSystem.ViewModel
                 CMContext.SaveChanges();
                 PurchaseOrderCollectionViewModel = null;
                 OutPurchaseOrderButtonIsEnabled = false;
+            }
+        }
+        private void SearchExecute(object parameter)
+        {
+            if (SearchString != null)
+            {
+                foreach (var cargoViewModel in CargoViewModels)
+                {
+                    cargoViewModel.UpdateOrderScore(SearchString);
+                }
+                CargoViewModelsView.Refresh();
+                //DataGrid grid = parameter as DataGrid;
+                //CargoViewModels = new ObservableCollection<CargoViewModel>(CargoViewModels.OrderByDescending(item => item.OrderScore));
+                //grid.ItemsSource = CargoViewModels;
             }
         }
     }
