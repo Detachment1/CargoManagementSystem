@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:CargoManagementSystem.View" 
         x:Class="CargoManagementSystem.View.MainWindow"
         mc:Ignorable="d"
-        Title="仓库管理系统" Height="720" Width="1300" WindowStartupLocation="CenterScreen">
+        Title="仓库管理系统" Height="520" Width="1000" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -29,7 +29,7 @@ namespace CargoManagementSystem.Service
         public virtual DbSet<PurchaseOrderCollection> PurchaseOrderCollection { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            Database.SetInitializer<CargoManagementContext>(null);
+            // Database.SetInitializer<CargoManagementContext>(null);
             modelBuilder.Entity<Block>()
                 .HasMany(e => e.CargoCollections)
                 .WithRequired(e => e.Block)
